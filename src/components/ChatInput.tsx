@@ -56,8 +56,8 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
           transition: 'border-color 0.15s ease, box-shadow 0.15s ease',
         }}
         onFocus={e => {
-          (e.target as HTMLInputElement).style.borderColor = '#046BD2';
-          (e.target as HTMLInputElement).style.boxShadow = '0 0 0 3px rgba(4, 107, 210, 0.1)';
+          (e.target as HTMLInputElement).style.borderColor = '#C9232A';
+          (e.target as HTMLInputElement).style.boxShadow = '0 0 0 3px rgba(201, 35, 42, 0.1)';
         }}
         onBlur={e => {
           (e.target as HTMLInputElement).style.borderColor = '#E5E7EB';
@@ -71,7 +71,7 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
           width: '40px',
           height: '40px',
           borderRadius: '50%',
-          background: canSend ? '#046BD2' : '#D1D5DB',
+          background: canSend ? '#C9232A' : '#D1D5DB',
           border: 'none',
           cursor: canSend ? 'pointer' : 'not-allowed',
           display: 'flex',
@@ -82,12 +82,12 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
         }}
         onMouseEnter={e => {
           if (canSend) {
-            (e.currentTarget as HTMLButtonElement).style.background = '#0356A8';
+            (e.currentTarget as HTMLButtonElement).style.background = '#B01E24';
             (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.05)';
           }
         }}
         onMouseLeave={e => {
-          (e.currentTarget as HTMLButtonElement).style.background = canSend ? '#046BD2' : '#D1D5DB';
+          (e.currentTarget as HTMLButtonElement).style.background = canSend ? '#C9232A' : '#D1D5DB';
           (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
         }}
         aria-label="Send message"

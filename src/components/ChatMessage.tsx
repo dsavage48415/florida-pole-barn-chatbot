@@ -55,7 +55,7 @@ function renderContent(text: string, videos: VideoCardData[], onImageClick?: (ur
       } else {
         // Video not found in sources — show as text reference
         elements.push(
-          <span key={`ref-${i}`} style={{ color: '#046BD2', fontWeight: 600 }}>
+          <span key={`ref-${i}`} style={{ color: '#C9232A', fontWeight: 600 }}>
             Video #{videoNum}
           </span>
         );
@@ -105,7 +105,7 @@ export default function ChatMessage({ role, content, videos = [], onImageClick }
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: isUser ? '#E2E8F0' : '#046BD2',
+            background: isUser ? '#E2E8F0' : '#C9232A',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -127,7 +127,7 @@ export default function ChatMessage({ role, content, videos = [], onImageClick }
 
         <div
           style={{
-            background: isUser ? '#046BD2' : '#F7F7F8',
+            background: isUser ? '#C9232A' : '#F7F7F8',
             color: isUser ? '#FFFFFF' : '#1A1A1A',
             borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
             padding: '12px 16px',

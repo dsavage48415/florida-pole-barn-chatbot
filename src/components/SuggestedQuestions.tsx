@@ -43,10 +43,10 @@ export default function SuggestedQuestions({ onSelect }: SuggestedQuestionsProps
             gap: '6px',
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor = '#046BD2';
-            (e.currentTarget as HTMLButtonElement).style.background = '#F0F7FF';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = '#C9232A';
+            (e.currentTarget as HTMLButtonElement).style.background = '#FFF5F5';
             (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
-            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 8px rgba(4, 107, 210, 0.1)';
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 8px rgba(201, 35, 42, 0.1)';
           }}
           onMouseLeave={e => {
             (e.currentTarget as HTMLButtonElement).style.borderColor = '#E5E7EB';

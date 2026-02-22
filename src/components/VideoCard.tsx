@@ -95,7 +95,7 @@ export default function VideoCard({ videoNumber, caption, tiktokUrl, thumbnailUr
               display: 'inline-block',
               marginTop: '6px',
               fontSize: '11px',
-              color: '#046BD2',
+              color: '#C9232A',
               textDecoration: 'none',
               fontWeight: 600,
               padding: '3px 8px',

@@ -9,8 +9,8 @@ const config: Config = {
     extend: {
       colors: {
         fpb: {
-          primary: '#046BD2',
-          'primary-dark': '#045CB4',
+          primary: '#C9232A',
+          'primary-dark': '#A81D22',
           dark: '#1E293B',
           text: '#334155',
           light: '#F0F5FA',

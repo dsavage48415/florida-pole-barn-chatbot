@@ -154,7 +154,7 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
             ...filtered,
             {
               role: 'assistant',
-              content: `Sorry, I encountered an error: ${errorMessage}. Please try again or call us at (352) 585-8831.`,
+              content: `Sorry, I encountered an error: ${errorMessage}. Please try again or call us at (352) 340-0822.`,
             },
           ];
         });

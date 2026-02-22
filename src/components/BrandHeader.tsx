@@ -6,7 +6,7 @@ export default function BrandHeader() {
   return (
     <div
       style={{
-        background: 'linear-gradient(135deg, #046BD2 0%, #045CB4 100%)',
+        background: 'linear-gradient(135deg, #C9232A 0%, #A81D22 100%)',
         color: '#FFFFFF',
         padding: '20px 24px 18px',
         display: 'flex',
@@ -41,7 +41,7 @@ export default function BrandHeader() {
       </div>
 
       <a
-        href="tel:3525858831"
+        href="tel:3523400822"
         style={{
           color: '#FFFFFF',
           textDecoration: 'none',
@@ -55,7 +55,7 @@ export default function BrandHeader() {
         }}
         title="Call Florida Pole Barn"
       >
-        📞 (352) 585-8831
+        📞 (352) 340-0822
       </a>
     </div>
   );

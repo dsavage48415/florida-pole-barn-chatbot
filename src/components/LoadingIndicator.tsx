@@ -10,7 +10,7 @@ export default function LoadingIndicator() {
           width: '32px',
           height: '32px',
           borderRadius: '50%',
-          background: '#046BD2',
+          background: '#C9232A',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
