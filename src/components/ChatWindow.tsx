@@ -31,36 +31,30 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Load conversation history from localStorage
+  // Always start fresh — clear any stale history on mount
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('fpb-chat-history');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setMessages(parsed.slice(-20)); // Keep last 20 messages
-        }
-      }
-    } catch {
-      // Ignore parse errors
-    }
+    localStorage.removeItem('fpb-chat-history');
   }, []);
 
-  // Save conversation history
-  useEffect(() => {
-    if (messages.length > 0) {
-      try {
-        // Only save text content, not video data (to keep localStorage small)
-        const toSave = messages.map(m => ({
-          role: m.role,
-          content: m.content,
-        }));
-        localStorage.setItem('fpb-chat-history', JSON.stringify(toSave));
-      } catch {
-        // Ignore storage errors
+  // Build a video URL lookup map from all messages' video sources
+  const videoUrlMap = React.useMemo(() => {
+    const map: Record<string, string> = {};
+    for (const msg of messages) {
+      if (msg.videos) {
+        for (const v of msg.videos) {
+          if (v.tiktok_url) {
+            map[v.video_number] = v.tiktok_url;
+          }
+        }
       }
     }
+    return map;
   }, [messages]);
+
+  const handleStartOver = useCallback(() => {
+    setMessages([]);
+    localStorage.removeItem('fpb-chat-history');
+  }, []);
 
   const sendMessage = useCallback(
     async (text: string) => {
@@ -166,6 +160,7 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
   );
 
   const showSuggestions = messages.length === 0 && !isStreaming;
+  const showStartOver = messages.length > 0 && !isStreaming;
 
   return (
     <div
@@ -221,12 +216,51 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
               role={msg.role}
               content={msg.content}
               videos={msg.videos}
+              videoUrlMap={videoUrlMap}
               onImageClick={url => setLightboxImage(url)}
             />
           ))
         )}
 
         {isStreaming && messages[messages.length - 1]?.content === '' && <LoadingIndicator />}
+
+        {/* Start Over button */}
+        {showStartOver && (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '16px 20px 8px' }}>
+            <button
+              onClick={handleStartOver}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '8px 20px',
+                borderRadius: '20px',
+                border: '1px solid #E5E7EB',
+                background: '#F9FAFB',
+                color: '#6B7280',
+                fontSize: '13px',
+                fontWeight: 500,
+                cursor: 'pointer',
+                transition: 'all 0.15s ease',
+                fontFamily: 'inherit',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = '#F3F4F6';
+                (e.currentTarget as HTMLButtonElement).style.borderColor = '#D1D5DB';
+                (e.currentTarget as HTMLButtonElement).style.color = '#374151';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.background = '#F9FAFB';
+                (e.currentTarget as HTMLButtonElement).style.borderColor = '#E5E7EB';
+                (e.currentTarget as HTMLButtonElement).style.color = '#6B7280';
+              }}
+            >
+              <span style={{ fontSize: '14px' }}>🔄</span>
+              Start Over
+            </button>
+          </div>
+        )}
+
         <div ref={messagesEndRef} />
       </div>
 

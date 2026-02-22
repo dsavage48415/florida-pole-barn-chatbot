@@ -9,6 +9,7 @@ interface ChatMessageProps {
   role: 'user' | 'assistant';
   content: string;
   videos?: VideoCardData[];
+  videoUrlMap?: Record<string, string>;
   onImageClick?: (url: string) => void;
 }
 
@@ -16,7 +17,12 @@ interface ChatMessageProps {
  * Render markdown-like content with basic formatting.
  * Handles: bold, bullets, numbered lists, [VIDEO:NNNN] tokens, line breaks.
  */
-function renderContent(text: string, videos: VideoCardData[], onImageClick?: (url: string) => void) {
+function renderContent(
+  text: string,
+  videos: VideoCardData[],
+  videoUrlMap: Record<string, string>,
+  onImageClick?: (url: string) => void
+) {
   // Split by [VIDEO:NNNN] tokens
   const parts = text.split(/\[VIDEO:(\d{4})\]/g);
   const elements: React.ReactNode[] = [];
@@ -53,12 +59,44 @@ function renderContent(text: string, videos: VideoCardData[], onImageClick?: (ur
           </div>
         );
       } else {
-        // Video not found in sources — show as text reference
-        elements.push(
-          <span key={`ref-${i}`} style={{ color: '#C9232A', fontWeight: 600 }}>
-            Video #{videoNum}
-          </span>
-        );
+        // Video not found in sources — render as clickable link if we have a URL
+        const tiktokUrl = videoUrlMap[videoNum] || '';
+        if (tiktokUrl) {
+          elements.push(
+            <a
+              key={`ref-${i}`}
+              href={tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#C9232A',
+                fontWeight: 600,
+                textDecoration: 'none',
+                borderBottom: '1px solid rgba(201, 35, 42, 0.3)',
+              }}
+            >
+              Video #{videoNum}
+            </a>
+          );
+        } else {
+          // No URL available — link to FloGrown TikTok profile as fallback
+          elements.push(
+            <a
+              key={`ref-${i}`}
+              href="https://www.tiktok.com/@floydfonck"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: '#C9232A',
+                fontWeight: 600,
+                textDecoration: 'none',
+                borderBottom: '1px solid rgba(201, 35, 42, 0.3)',
+              }}
+            >
+              Video #{videoNum}
+            </a>
+          );
+        }
       }
     }
   }
@@ -77,7 +115,13 @@ function formatText(text: string): string {
     .replace(/\n/g, '<br/>');
 }
 
-export default function ChatMessage({ role, content, videos = [], onImageClick }: ChatMessageProps) {
+export default function ChatMessage({
+  role,
+  content,
+  videos = [],
+  videoUrlMap = {},
+  onImageClick,
+}: ChatMessageProps) {
   const isUser = role === 'user';
 
   return (
@@ -136,7 +180,7 @@ export default function ChatMessage({ role, content, videos = [], onImageClick }
             wordBreak: 'break-word',
           }}
         >
-          {isUser ? content : renderContent(content, videos, onImageClick)}
+          {isUser ? content : renderContent(content, videos, videoUrlMap, onImageClick)}
         </div>
       </div>
     </div>

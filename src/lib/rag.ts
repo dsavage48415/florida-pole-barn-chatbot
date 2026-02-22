@@ -63,6 +63,23 @@ function buildSourceData(
       keyframe_count: v.keyframe_count,
     }));
 
+  // Also include videos referenced by keyframes that aren't already in the video results.
+  // The LLM sees these video numbers in the keyframe context and may reference them with
+  // [VIDEO:NNNN] tokens, so the frontend needs their tiktok_url to render clickable cards.
+  for (const kf of keyframes) {
+    if (!seenVideos.has(kf.video_number)) {
+      seenVideos.add(kf.video_number);
+      videoCards.push({
+        video_number: kf.video_number,
+        caption: kf.caption || `Video #${kf.video_number}`,
+        tiktok_url: kf.tiktok_url || '',
+        thumbnail_url: '', // No thumbnail available from keyframe-only results
+        keyframe_urls: [getThumbnailUrl(kf.image_path)],
+        keyframe_count: 0,
+      });
+    }
+  }
+
   const keyframeCards: KeyframeData[] = keyframes.map(kf => ({
     video_number: kf.video_number,
     caption: kf.caption || '',
