@@ -10,7 +10,7 @@ interface ChatMessageProps {
   content: string;
   videos?: VideoCardData[];
   videoUrlMap?: Record<string, string>;
-  onImageClick?: (url: string) => void;
+  onImageClick?: (allImages: string[], clickedIndex: number) => void;
 }
 
 /**
@@ -21,8 +21,19 @@ function renderContent(
   text: string,
   videos: VideoCardData[],
   videoUrlMap: Record<string, string>,
-  onImageClick?: (url: string) => void
+  onImageClick?: (allImages: string[], clickedIndex: number) => void
 ) {
+  // Build a flat array of ALL medium-resolution keyframe URLs across all videos
+  // so the gallery lightbox can navigate through every image in the response.
+  const allMediumImages: string[] = [];
+  const videoStartIndices: Record<string, number> = {};
+  for (const v of videos) {
+    videoStartIndices[v.video_number] = allMediumImages.length;
+    for (const url of v.keyframe_urls) {
+      allMediumImages.push(url.replace('_thumb', '_medium'));
+    }
+  }
+
   // Split by [VIDEO:NNNN] tokens
   const parts = text.split(/\[VIDEO:(\d{4})\]/g);
   const elements: React.ReactNode[] = [];
@@ -41,6 +52,7 @@ function renderContent(
       const videoNum = parts[i];
       const video = videos.find(v => v.video_number === videoNum);
       if (video) {
+        const startIndex = videoStartIndices[video.video_number] ?? 0;
         elements.push(
           <div key={`video-${i}`}>
             <VideoCard
@@ -53,6 +65,8 @@ function renderContent(
               <KeyframeGallery
                 images={video.keyframe_urls}
                 videoNumber={video.video_number}
+                allImages={allMediumImages}
+                startIndex={startIndex}
                 onImageClick={onImageClick}
               />
             )}

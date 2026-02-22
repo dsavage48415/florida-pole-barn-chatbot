@@ -5,10 +5,12 @@ import React from 'react';
 interface KeyframeGalleryProps {
   images: string[];
   videoNumber: string;
-  onImageClick?: (url: string) => void;
+  allImages?: string[];   // flat array of all medium URLs across all videos in the response
+  startIndex?: number;    // offset of this gallery's images within allImages
+  onImageClick?: (allImages: string[], clickedIndex: number) => void;
 }
 
-export default function KeyframeGallery({ images, videoNumber, onImageClick }: KeyframeGalleryProps) {
+export default function KeyframeGallery({ images, videoNumber, allImages, startIndex = 0, onImageClick }: KeyframeGalleryProps) {
   if (!images || images.length === 0) return null;
 
   return (
@@ -24,7 +26,11 @@ export default function KeyframeGallery({ images, videoNumber, onImageClick }: K
       {images.map((url, i) => (
         <div
           key={i}
-          onClick={() => onImageClick?.(url.replace('_thumb', '_medium'))}
+          onClick={() => {
+            if (allImages && onImageClick) {
+              onImageClick(allImages, startIndex + i);
+            }
+          }}
           style={{
             width: '80px',
             height: '80px',

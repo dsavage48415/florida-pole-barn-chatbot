@@ -22,7 +22,10 @@ interface ChatWindowProps {
 export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
-  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [lightboxState, setLightboxState] = useState<{
+    images: string[];
+    currentIndex: number;
+  } | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const userMsgRef = useRef<HTMLDivElement>(null);
@@ -223,7 +226,7 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
                 content={msg.content}
                 videos={msg.videos}
                 videoUrlMap={videoUrlMap}
-                onImageClick={url => setLightboxImage(url)}
+                onImageClick={(allImages, clickedIndex) => setLightboxState({ images: allImages, currentIndex: clickedIndex })}
               />
             </div>
           ))
@@ -273,8 +276,13 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
 
       <ChatInput onSend={sendMessage} disabled={isStreaming} />
 
-      {lightboxImage && (
-        <ImageLightbox imageUrl={lightboxImage} onClose={() => setLightboxImage(null)} />
+      {lightboxState && (
+        <ImageLightbox
+          images={lightboxState.images}
+          currentIndex={lightboxState.currentIndex}
+          onNavigate={(index) => setLightboxState(prev => prev ? { ...prev, currentIndex: index } : null)}
+          onClose={() => setLightboxState(null)}
+        />
       )}
     </div>
   );
