@@ -7,51 +7,56 @@ interface SuggestedQuestionsProps {
 }
 
 const SUGGESTIONS = [
-  'How do I install trusses on a pole barn?',
-  'What size posts do I need for a 30x40 barn?',
-  'How do I pour footers for pole barn posts?',
-  'What type of metal roofing should I use?',
+  { emoji: '🏗️', text: 'How do I install trusses on a pole barn?' },
+  { emoji: '📐', text: 'What size posts do I need for a 30x40 barn?' },
+  { emoji: '🧱', text: 'How do I pour footers for pole barn posts?' },
+  { emoji: '🔩', text: 'What type of metal roofing should I use?' },
 ];
 
 export default function SuggestedQuestions({ onSelect }: SuggestedQuestionsProps) {
   return (
-    <div style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <div
-        style={{
-          fontSize: '13px',
-          color: '#64748B',
-          textAlign: 'center',
-          marginBottom: '4px',
-        }}
-      >
-        Ask me anything about pole barn construction:
-      </div>
-      {SUGGESTIONS.map((question, i) => (
+    <div
+      style={{
+        padding: '8px 20px 16px',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '10px',
+      }}
+    >
+      {SUGGESTIONS.map((item, i) => (
         <button
           key={i}
-          onClick={() => onSelect(question)}
+          onClick={() => onSelect(item.text)}
           style={{
-            background: '#F0F5FA',
-            border: '1px solid #E2E8F0',
-            borderRadius: '10px',
-            padding: '10px 14px',
+            background: '#FFFFFF',
+            border: '1px solid #E5E7EB',
+            borderRadius: '12px',
+            padding: '14px 16px',
             fontSize: '13px',
-            color: '#334155',
+            color: '#374151',
             cursor: 'pointer',
             textAlign: 'left',
             lineHeight: '1.4',
             transition: 'all 0.15s ease',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '6px',
           }}
           onMouseEnter={e => {
-            (e.target as HTMLButtonElement).style.background = '#E2E8F0';
-            (e.target as HTMLButtonElement).style.borderColor = '#046BD2';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = '#046BD2';
+            (e.currentTarget as HTMLButtonElement).style.background = '#F0F7FF';
+            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-1px)';
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 2px 8px rgba(4, 107, 210, 0.1)';
           }}
           onMouseLeave={e => {
-            (e.target as HTMLButtonElement).style.background = '#F0F5FA';
-            (e.target as HTMLButtonElement).style.borderColor = '#E2E8F0';
+            (e.currentTarget as HTMLButtonElement).style.borderColor = '#E5E7EB';
+            (e.currentTarget as HTMLButtonElement).style.background = '#FFFFFF';
+            (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = 'none';
           }}
         >
-          {question}
+          <span style={{ fontSize: '20px' }}>{item.emoji}</span>
+          <span>{item.text}</span>
         </button>
       ))}
     </div>

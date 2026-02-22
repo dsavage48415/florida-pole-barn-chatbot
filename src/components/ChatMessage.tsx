@@ -86,47 +86,53 @@ export default function ChatMessage({ role, content, videos = [], onImageClick }
         display: 'flex',
         flexDirection: 'column',
         alignItems: isUser ? 'flex-end' : 'flex-start',
-        padding: '4px 16px',
+        padding: '6px 20px',
       }}
     >
       {/* Avatar + bubble */}
       <div
         style={{
           display: 'flex',
-          gap: '8px',
-          maxWidth: '90%',
+          gap: '10px',
+          maxWidth: '85%',
           flexDirection: isUser ? 'row-reverse' : 'row',
           alignItems: 'flex-start',
         }}
       >
-        {!isUser && (
-          <div
-            style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '50%',
-              background: '#046BD2',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#FFF',
-              fontSize: '14px',
-              flexShrink: 0,
-              marginTop: '2px',
-            }}
-          >
-            🏗️
-          </div>
-        )}
+        {/* Avatar */}
+        <div
+          style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            background: isUser ? '#E2E8F0' : '#046BD2',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: isUser ? '#64748B' : '#FFF',
+            fontSize: isUser ? '14px' : '16px',
+            flexShrink: 0,
+            marginTop: '2px',
+          }}
+        >
+          {isUser ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          ) : (
+            '🏗️'
+          )}
+        </div>
 
         <div
           style={{
-            background: isUser ? '#046BD2' : '#F0F5FA',
-            color: isUser ? '#FFFFFF' : '#334155',
-            borderRadius: isUser ? '12px 12px 4px 12px' : '12px 12px 12px 4px',
-            padding: '10px 14px',
-            fontSize: '13.5px',
-            lineHeight: '1.5',
+            background: isUser ? '#046BD2' : '#F7F7F8',
+            color: isUser ? '#FFFFFF' : '#1A1A1A',
+            borderRadius: isUser ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
+            padding: '12px 16px',
+            fontSize: '14px',
+            lineHeight: '1.6',
             wordBreak: 'break-word',
           }}
         >

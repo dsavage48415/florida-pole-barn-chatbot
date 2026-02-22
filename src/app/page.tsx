@@ -3,87 +3,67 @@
 import ChatWidget from '@/components/ChatWidget';
 
 /**
- * Dev/test page — renders the chatbot widget directly.
- * In production, the widget is embedded via widget.js on the WordPress site.
+ * Dev/test page — renders the chatbot inline, exactly like it will appear
+ * when embedded on the WordPress Resources page.
  */
 export default function Home() {
   return (
-    <div style={{ padding: '40px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1
-        style={{
-          fontSize: '28px',
-          fontWeight: 700,
-          color: '#1E293B',
-          marginBottom: '16px',
-        }}
-      >
-        Florida Pole Barn — AI Chatbot Test Page
-      </h1>
-
-      <p style={{ color: '#64748B', lineHeight: '1.6', marginBottom: '24px' }}>
-        This is a development test page. The chatbot widget appears as a floating
-        blue bubble in the bottom-right corner. Click it to open the chat.
-      </p>
-
-      <div
-        style={{
-          background: '#FFFFFF',
-          border: '1px solid #E2E8F0',
-          borderRadius: '12px',
-          padding: '24px',
-          marginBottom: '24px',
-        }}
-      >
-        <h2
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#F3F4F6',
+        padding: '40px 20px',
+      }}
+    >
+      <div style={{ maxWidth: '900px', margin: '0 auto 32px' }}>
+        <h1
           style={{
-            fontSize: '18px',
-            fontWeight: 600,
-            color: '#1E293B',
-            marginBottom: '12px',
+            fontSize: '28px',
+            fontWeight: 700,
+            color: '#111827',
+            marginBottom: '8px',
           }}
         >
-          Test Queries
-        </h2>
-        <ul style={{ color: '#334155', lineHeight: '2', paddingLeft: '20px' }}>
-          <li>How do I install trusses on a pole barn?</li>
-          <li>What size posts do I need for a 30x40 barn?</li>
-          <li>How do I pour footers for pole barn posts?</li>
-          <li>What type of metal roofing should I use?</li>
-          <li>How to attach purlins to trusses?</li>
-          <li>Best way to level posts for a pole barn?</li>
-        </ul>
+          Florida Pole Barn — Resources
+        </h1>
+        <p style={{ color: '#6B7280', lineHeight: '1.6', fontSize: '15px' }}>
+          Get expert pole barn construction advice from our AI assistant,
+          powered by 1,860+ instructional videos from Floyd Fonck.
+        </p>
       </div>
+
+      {/* Inline chatbot — same as WordPress embed */}
+      <ChatWidget height="600px" />
 
       <div
         style={{
-          background: '#F0F5FA',
-          border: '1px solid #E2E8F0',
+          maxWidth: '900px',
+          margin: '32px auto 0',
+          background: '#FFFFFF',
+          border: '1px solid #E5E7EB',
           borderRadius: '12px',
           padding: '24px',
         }}
       >
         <h2
           style={{
-            fontSize: '18px',
+            fontSize: '16px',
             fontWeight: 600,
-            color: '#1E293B',
+            color: '#111827',
             marginBottom: '12px',
           }}
         >
           API Endpoints
         </h2>
-        <div style={{ fontFamily: 'monospace', fontSize: '13px', color: '#334155' }}>
+        <div style={{ fontFamily: 'monospace', fontSize: '13px', color: '#374151' }}>
           <p style={{ marginBottom: '8px' }}>
             <strong>POST /api/chat</strong> — RAG chatbot (SSE streaming)
           </p>
-          <p style={{ marginBottom: '8px' }}>
+          <p>
             <strong>GET /api/search?q=truss&amp;type=all&amp;limit=10</strong> — Direct search
           </p>
         </div>
       </div>
-
-      {/* Chatbot Widget */}
-      <ChatWidget />
     </div>
   );
 }

@@ -5,21 +5,26 @@
   Instructions:
   1. In WordPress, go to the Resources page (floridapolebarn.com/resources/)
   2. Edit the page with Elementor
-  3. Add an "HTML" widget (or use Theme > Custom Code > Footer)
-  4. Paste the script tag below
+  3. Add an "HTML" widget where you want the chatbot to appear
+  4. Paste the code below into the HTML widget
   5. Save and publish
 
-  The chatbot will appear as a floating blue bubble in the bottom-right corner.
-  Users can click it to open the chat and ask pole barn construction questions.
+  The chatbot will appear inline as a ChatGPT-style chat section
+  embedded directly in the page content. It does NOT conflict
+  with the existing Tidio/HubSpot floating widget.
 
   Configuration:
-  - data-fpb-chatbot    : Required marker attribute
-  - data-api-url        : Optional override for API base URL
+  - data-fpb-chatbot-embed : Marker for inline embed mode
+  - data-target            : ID of the container element (default: fpb-chatbot)
+  - data-height            : Custom height (default: 600px)
+  - data-api-url           : Optional override for API base URL
 -->
 
-<!-- Florida Pole Barn AI Chatbot -->
+<!-- Florida Pole Barn AI Chatbot (Inline Embed) -->
+<div id="fpb-chatbot" style="max-width: 900px; margin: 40px auto;"></div>
 <script
-  src="https://fpb-chatbot.vercel.app/widget.js"
+  src="https://florida-pole-barn-chatbot.vercel.app/widget.js"
   defer
-  data-fpb-chatbot
+  data-fpb-chatbot-embed
+  data-target="fpb-chatbot"
 ></script>

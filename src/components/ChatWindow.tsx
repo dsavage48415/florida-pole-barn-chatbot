@@ -16,11 +16,10 @@ interface Message {
 }
 
 interface ChatWindowProps {
-  onClose: () => void;
   apiBaseUrl: string;
 }
 
-export default function ChatWindow({ onClose, apiBaseUrl }: ChatWindowProps) {
+export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
@@ -175,14 +174,15 @@ export default function ChatWindow({ onClose, apiBaseUrl }: ChatWindowProps) {
         flexDirection: 'column',
         height: '100%',
         background: '#FFFFFF',
-        borderRadius: '12px',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08)',
+        borderRadius: '16px',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 24px rgba(0, 0, 0, 0.06)',
         overflow: 'hidden',
         fontFamily:
           '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+        border: '1px solid #E5E7EB',
       }}
     >
-      <BrandHeader onClose={onClose} />
+      <BrandHeader />
 
       {/* Messages area */}
       <div
@@ -198,16 +198,16 @@ export default function ChatWindow({ onClose, apiBaseUrl }: ChatWindowProps) {
           <div>
             <div
               style={{
-                padding: '20px 16px 8px',
+                padding: '28px 20px 12px',
                 textAlign: 'center',
               }}
             >
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🏗️</div>
-              <div style={{ fontSize: '15px', fontWeight: 600, color: '#1E293B' }}>
+              <div style={{ fontSize: '40px', marginBottom: '12px' }}>🏗️</div>
+              <div style={{ fontSize: '18px', fontWeight: 600, color: '#111827' }}>
                 Welcome to Ask Florida Pole Barn!
               </div>
               <div
-                style={{ fontSize: '13px', color: '#64748B', marginTop: '4px', lineHeight: '1.4' }}
+                style={{ fontSize: '14px', color: '#6B7280', marginTop: '6px', lineHeight: '1.5' }}
               >
                 Get expert advice from 1,860+ pole barn construction videos.
               </div>
