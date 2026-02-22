@@ -73,7 +73,7 @@ function buildSourceData(
         video_number: kf.video_number,
         caption: kf.caption || `Video #${kf.video_number}`,
         tiktok_url: kf.tiktok_url || '',
-        thumbnail_url: '', // No thumbnail available from keyframe-only results
+        thumbnail_url: getThumbnailUrl(kf.image_path), // Use keyframe image as thumbnail
         keyframe_urls: [getThumbnailUrl(kf.image_path)],
         keyframe_count: 0,
       });

@@ -25,11 +25,17 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const userMsgRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom when messages change
+  // Scroll user's question to the top when they send a new message.
+  // Only triggers on messages.length changes (not streaming token updates).
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messages.length > 0 && messages[messages.length - 1]?.role === 'user') {
+      setTimeout(() => {
+        userMsgRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  }, [messages.length]);
 
   // Always start fresh — clear any stale history on mount
   useEffect(() => {
@@ -211,14 +217,15 @@ export default function ChatWindow({ apiBaseUrl }: ChatWindowProps) {
           </div>
         ) : (
           messages.map((msg, i) => (
-            <ChatMessage
-              key={i}
-              role={msg.role}
-              content={msg.content}
-              videos={msg.videos}
-              videoUrlMap={videoUrlMap}
-              onImageClick={url => setLightboxImage(url)}
-            />
+            <div key={i} ref={msg.role === 'user' ? userMsgRef : undefined}>
+              <ChatMessage
+                role={msg.role}
+                content={msg.content}
+                videos={msg.videos}
+                videoUrlMap={videoUrlMap}
+                onImageClick={url => setLightboxImage(url)}
+              />
+            </div>
           ))
         )}
 

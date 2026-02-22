@@ -10,6 +10,8 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({ videoNumber, caption, tiktokUrl, thumbnailUrl }: VideoCardProps) {
+  const [imgError, setImgError] = React.useState(false);
+
   return (
     <div
       style={{
@@ -34,7 +36,7 @@ export default function VideoCard({ videoNumber, caption, tiktokUrl, thumbnailUr
           background: '#F0F5FA',
         }}
       >
-        {thumbnailUrl ? (
+        {thumbnailUrl && !imgError ? (
           <img
             src={thumbnailUrl}
             alt={`Video #${videoNumber}`}
@@ -44,6 +46,7 @@ export default function VideoCard({ videoNumber, caption, tiktokUrl, thumbnailUr
               objectFit: 'cover',
             }}
             loading="lazy"
+            onError={() => setImgError(true)}
           />
         ) : (
           <div
